@@ -8,21 +8,21 @@ const ProfileSchema = new mongoose.Schema({
     bio: {type: String},
     githubusername: {type: String},
     experience: [{
-        title: {type: String},
-        company: {type: String},
+        title: {type: String, required:true},
+        company: {type: String, required:true},
         location: {type: String},
-        from: {type: Date},
+        from: {type: Date, required:true},
         to: {type: Date},
-        current: {type: Boolean},
+        current: {type: Boolean, default: false},
         description: {type: String}
     }],
     education:[{
-        institution: {type:String},
-        degree:{type:String},
-        fieldOfStudy:{type: String},
-        from: {type: Date},
+        institution: {type:String, required:true},
+        degree:{type:String, required:true},
+        fieldOfStudy:{type: String, required:true},
+        from: {type: Date, required:true},
         to: {type: Date},
-        current: {type: Boolean},
+        current: {type: Boolean, default:false},
         description: {type: String}
 
     }],
