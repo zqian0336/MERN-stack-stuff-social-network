@@ -61,21 +61,36 @@ router.post('/', [auth,[
         } = req.body;
 
         //build profile object
-        const profileFields = {};
-        profileFields.user = req.user.id;
-        if (department) profileFields.department = department;
-        if (website) profileFields.website = website;
-        if (location) profileFields.location = location;
-        if (bio) profileFields.bio = bio;
-        if (status) profileFields.status = status;
-        if (githubusername) profileFields.githubusername = githubusername;
+        const profileFields = {
+            user: req.user.id,
+            department,
+            location,
+            bio,
+            status,
+            githubusername
+        };
 
-        profileFields.social = {};
-        if (youtube) profileFields.social.youtube = youtube;
-        if (twitter) profileFields.social.twitter = twitter;
-        if (facebook) profileFields.social.facebook = facebook;
-        if (instagram) profileFields.social.instagram = instagram;
-        if (linkedin) profileFields.social.linkedin = linkedin;
+        // Build social object and add to profileFields
+        const socialfields = { youtube, twitter, instagram, linkedin, facebook };
+
+        for (const [key, value] of Object.entries(socialfields)) {
+            if (value && value.length > 0)
+                socialfields[key] = normalize(value, { forceHttps: true });
+        }
+        profileFields.social = socialfields;
+
+        try {
+            // Using upsert option (creates new doc if no match is found):
+            let profile = await Profile.findOneAndUpdate(
+                { user: req.user.id },
+                { $set: profileFields },
+                { new: true, upsert: true }
+            );
+            res.json(profile);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
     });
 
 

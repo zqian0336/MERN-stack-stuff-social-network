@@ -6,7 +6,7 @@ const db = config.get('mongoURI');
 //return a promise
 const connectDB = async () => {
     try{
-        await mongoose.connect(db, { useNewUrlParser: true, useCreateIndex:true, useUnifiedTopology: true});
+        await mongoose.connect(db, { useNewUrlParser: true, useCreateIndex:true, useFindAndModify:false,useUnifiedTopology: true});
         console.log('MongoDB Connected...');
     } catch (err) {
         console.error(err.message);
