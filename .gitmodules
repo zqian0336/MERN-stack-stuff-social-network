@@ -1,0 +1,3 @@
+[submodule "MERN-react-part"]
+	path = MERN-react-part
+	url = https://github.com/zqian0336/MERN-react-part.git
