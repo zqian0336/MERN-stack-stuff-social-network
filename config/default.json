@@ -1,5 +1,0 @@
-{
-  "mongoURI": "mongodb://zqian0115:zqian0115@ds145208.mlab.com:45208/mern",
-  "jwtSecret": "mysecrettoken",
-  "githubToken": "6a85cd0406e661f56734b78b705f793cef30c4ff"
-}
